@@ -11,13 +11,13 @@ def endpoints(request):
     data = ['/advocates', '/advocates/:username']
     return Response(data)
 
-@api_view
+@api_view(['GET'])
 def advocate_list(request):
     data = ['Dennis', 'Tadas', 'Max']
-    return JsonResponse(data, safe=False)
+    return Response(data)
 
-@api_view
+@api_view(['GET'])
 def advocate_detail(request, username):
     data = username
-    return JsonResponse(data, safe=False)
+    return Response(data)
 
