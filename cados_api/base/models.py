@@ -7,3 +7,7 @@ class Advocate(models.Model):
     bio = models.TextField(max_length=250, null=True, blank=True)
 
 
+    def __str__(self):
+        return self.username
+
+
