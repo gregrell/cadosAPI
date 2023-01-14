@@ -1,9 +1,13 @@
 from django.shortcuts import render, redirect
 from django.db.models import Q
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from .models import Advocate, Company
 from .serializers import AdvocateSerializer, CompanySerializer
+
+# Authentication via JSON simple JWT
+from rest_framework.permissions import IsAuthenticated
+
 # Create your views here.
 
 
@@ -19,11 +23,12 @@ from .serializers import AdvocateSerializer, CompanySerializer
 
 @api_view(['GET'])
 def endpoints(request):
-    data = ['/advocate_list', '/advocate_detail/:username']
+    data = ['/advocate', '/advocate/?q=username']
     return Response(data)
 
 
 @api_view(['GET', 'POST', 'DELETE', 'PUT'])
+@permission_classes([IsAuthenticated])
 def advocate_list(request):
     if request.method == 'GET':
         # Handles GET requests
