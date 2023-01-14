@@ -23,7 +23,7 @@ def endpoints(request):
     return Response(data)
 
 
-@api_view(['GET', 'POST', 'PUT', 'DELETE'])
+@api_view(['GET', 'POST', 'DELETE', 'PUT'])
 def advocate_list(request):
     if request.method == 'GET':
         # Handles GET requests
@@ -44,18 +44,29 @@ def advocate_list(request):
         serializer = AdvocateSerializer(advocate, many=False)
         return Response(serializer.data)
 
-    if request.method == 'PUT':
-        pass
-
-    if request.method == 'DELETE':
-        pass
 
 
 
 
-@api_view(['GET'])
+
+@api_view(['GET', 'PUT', 'DELETE'])
 def advocate_detail(request, username):
     advocate = Advocate.objects.get(username=username)
-    serializer = AdvocateSerializer(advocate, many=False)
-    return Response(serializer.data)
 
+    if request.method == 'GET':
+        serializer = AdvocateSerializer(advocate, many=False)
+        return Response(serializer.data)
+
+    if request.method == 'PUT':
+        advocate.username = request.data['username']
+        advocate.bio = request.data['bio']
+        advocate.save()
+        serializer = AdvocateSerializer(advocate, many=False)
+        return Response(serializer.data)
+
+
+    if request.method == 'DELETE':
+        if advocate is not None:
+            advocate.delete()
+            print('success')
+            return Response('user was deleted')
