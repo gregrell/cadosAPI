@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'base',
+    'corsheaders',
 ]
 
 REST_FRAMEWORK = {
@@ -53,7 +54,7 @@ REST_FRAMEWORK = {
 # permission settings
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=50000),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': True,
@@ -80,8 +81,8 @@ SIMPLE_JWT = {
     'JTI_CLAIM': 'jti',
 
     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
-    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=200),  # default 1 minute
-    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(minutes=500),  # default was 1
+    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=20),  # default 1 minute
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(minutes=50),  # default was 1
 }
 
 
@@ -90,6 +91,9 @@ SIMPLE_JWT = {
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',
+
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -169,3 +173,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+CORS_ALLOW_ALL_ORIGINS = True

@@ -28,7 +28,7 @@ def endpoints(request):
 
 
 @api_view(['GET', 'POST', 'DELETE', 'PUT'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def advocate_list(request):
     if request.method == 'GET':
         # Handles GET requests
